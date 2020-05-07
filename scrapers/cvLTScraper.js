@@ -1,26 +1,16 @@
 const puppeteer = require('puppeteer');
 
-async function scrapeInside(url) {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url);
+async function scrapeInside(page) {
+    const scrappedInfo = await page.evaluate(() => {
+        const title = document.querySelector('#jobCont01 > h1').innerHTML;
+        const text = document.querySelector('#jobTxtRight').innerText;
+        return {
+            title,
+            text,
+        };
+    });
 
-    console.log(await getTittle(page));
-
-    const [jobDescriptionContainer] = await page.$x('//*[@id="jobTxtRight"]');
-    const span = await jobDescriptionContainer.$$('ul');
-    console.log(text);
-
-    browser.close();
-}
-
-async function getTittle(page) {
-    const [tittleContainer] = await page.$x('//*[@id="jobCont01"]');
-    let title = await (
-        await (await tittleContainer.$('h1')).getProperty('textContent')
-    ).jsonValue();
-
-    return title;
+    return scrappedInfo;
 }
 
 async function scrapeOutside(page) {
@@ -60,6 +50,7 @@ async function startScrape(url) {
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle2' });
     let fullUrls = [];
+    let fullScraped = [];
 
     //Get pages links
     const pagesUrls = await getPagesUrls(page);
@@ -73,6 +64,14 @@ async function startScrape(url) {
 
     //Get inside urls
     console.log(fullUrls);
+    for (let i = 0; i < fullUrls.length; i++) {
+        await page.goto(fullUrls[i], { waitUntil: 'networkidle2' });
+        let info = await scrapeInside(page);
+        fullScraped.push(info);
+    }
+
+    console.log(fullScraped);
+    debugger;
 
     await browser.close();
 }
