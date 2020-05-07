@@ -2,11 +2,52 @@ const puppeteer = require('puppeteer');
 
 async function scrapeInside(page) {
     const scrappedInfo = await page.evaluate(() => {
-        const title = document.querySelector('#jobCont01 > h1').innerHTML;
-        const text = document.querySelector('#jobTxtRight').innerText;
+        let title = null;
+        let text = null;
+        let company = null;
+        let datePosted = null;
+        let baseSalary = null;
+
+        try {
+            title = document.querySelector('#jobCont01 > h1').innerHTML;
+        } catch (error) {
+            console.log(error);
+        }
+
+        try {
+            text = document.querySelector('#jobTxtRight').innerText;
+        } catch (error) {
+            console.log(error);
+        }
+
+        try {
+            company = document.querySelector(
+                "meta[itemprop='hiringOrganization']"
+            ).content;
+        } catch (error) {
+            console.log(error);
+        }
+
+        try {
+            datePosted = document.querySelector("meta[itemprop='datePosted']")
+                .content;
+        } catch (error) {
+            console.log(error);
+        }
+
+        try {
+            baseSalary = document.querySelector("meta[itemprop='baseSalary']")
+                .content;
+        } catch (error) {
+            console.log(error);
+        }
+
         return {
             title,
             text,
+            company,
+            datePosted,
+            baseSalary,
         };
     });
 
@@ -14,35 +55,45 @@ async function scrapeInside(page) {
 }
 
 async function scrapeOutside(page) {
-    const jobUrls = await page.evaluate(() => {
-        let urls = [];
-        let itemsWithUrls = document.querySelectorAll('a[itemprop="title"]');
-        for (let i = 0; i < itemsWithUrls.length; i++) {
-            urls.push(itemsWithUrls[i].href);
-        }
+    try {
+        const jobUrls = await page.evaluate(() => {
+            let urls = [];
+            let itemsWithUrls = document.querySelectorAll(
+                'a[itemprop="title"]'
+            );
+            for (let i = 0; i < itemsWithUrls.length; i++) {
+                urls.push(itemsWithUrls[i].href);
+            }
 
-        return urls;
-    });
+            return urls;
+        });
 
-    return jobUrls;
+        return jobUrls;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function getPagesUrls(page) {
-    const urls = await page.evaluate(() => {
-        let urls = [];
-        let items = document
-            .querySelector('.paging-list')
-            .querySelector('.has-sub')
-            .querySelector('ul')
-            .getElementsByTagName('a');
-        for (let i = 0; i < items.length; i++) {
-            urls.push(items[i].href);
-        }
+    try {
+        const urls = await page.evaluate(() => {
+            let urls = [];
+            let items = document
+                .querySelector('.paging-list')
+                .querySelector('.has-sub')
+                .querySelector('ul')
+                .getElementsByTagName('a');
+            for (let i = 0; i < items.length; i++) {
+                urls.push(items[i].href);
+            }
+
+            return urls;
+        });
 
         return urls;
-    });
-
-    return urls;
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function startScrape(url) {
@@ -62,8 +113,6 @@ async function startScrape(url) {
         fullUrls = fullUrls.concat(urls);
     }
 
-    //Get inside urls
-    console.log(fullUrls);
     for (let i = 0; i < fullUrls.length; i++) {
         await page.goto(fullUrls[i], { waitUntil: 'networkidle2' });
         let info = await scrapeInside(page);
@@ -72,7 +121,6 @@ async function startScrape(url) {
 
     console.log(fullScraped);
     debugger;
-
     await browser.close();
 }
 
