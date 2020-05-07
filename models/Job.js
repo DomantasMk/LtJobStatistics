@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const JobsSchema = new mongoose.Schema({
-    jobTitle: {
+    job_title: {
         type: String,
     },
     keywords: [
@@ -9,16 +9,16 @@ const JobsSchema = new mongoose.Schema({
             type: String,
         },
     ],
-    jobPostedDate: {
+    job_posted_date: {
         type: String,
     },
-    Salary: {
+    salary: {
         type: String,
     },
-    Company: {
+    company: {
         type: String,
     },
-    dateAddedToDb: {
+    date_added_to_db: {
         type: Date,
         default: Date.now,
     },

@@ -2,14 +2,14 @@ const puppeteer = require('puppeteer');
 
 async function scrapeInside(page) {
     const scrappedInfo = await page.evaluate(() => {
-        let title = null;
+        let job_title = null;
         let text = null;
         let company = null;
-        let datePosted = null;
-        let baseSalary = null;
+        let job_posted_date = null;
+        let salary = null;
 
         try {
-            title = document.querySelector('#jobCont01 > h1').innerHTML;
+            job_title = document.querySelector('#jobCont01 > h1').innerHTML;
         } catch (error) {
             console.log(error);
         }
@@ -29,25 +29,26 @@ async function scrapeInside(page) {
         }
 
         try {
-            datePosted = document.querySelector("meta[itemprop='datePosted']")
-                .content;
+            job_posted_date = document.querySelector(
+                "meta[itemprop='datePosted']"
+            ).content;
         } catch (error) {
             console.log(error);
         }
 
         try {
-            baseSalary = document.querySelector("meta[itemprop='baseSalary']")
+            salary = document.querySelector("meta[itemprop='baseSalary']")
                 .content;
         } catch (error) {
             console.log(error);
         }
 
         return {
-            title,
+            job_title,
             text,
             company,
-            datePosted,
-            baseSalary,
+            job_posted_date,
+            salary,
         };
     });
 
@@ -96,7 +97,8 @@ async function getPagesUrls(page) {
     }
 }
 
-async function startScrape(url) {
+module.exports.startScrape = async function (url) {
+    console.log('Started scraping');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle2' });
@@ -104,26 +106,25 @@ async function startScrape(url) {
     let fullScraped = [];
 
     //Get pages links
+    console.log('Getting pages URLS');
     const pagesUrls = await getPagesUrls(page);
 
     //Loop thru each page and get cv urls
+    console.log('Getting all job urls');
     for (let i = 0; i < pagesUrls.length; i++) {
         await page.goto(pagesUrls[i], { waitUntil: 'networkidle2' });
         const urls = await scrapeOutside(page);
         fullUrls = fullUrls.concat(urls);
     }
 
+    console.log('Scrapping job insides');
     for (let i = 0; i < fullUrls.length; i++) {
         await page.goto(fullUrls[i], { waitUntil: 'networkidle2' });
         let info = await scrapeInside(page);
         fullScraped.push(info);
     }
+    console.log('Finished scraping');
 
-    console.log(fullScraped);
-    debugger;
     await browser.close();
-}
-
-startScrape(
-    'https://www.cv.lt/employee/announcementsAll.do?regular=true&department=1040&page=1'
-);
+    return fullScraped;
+};
