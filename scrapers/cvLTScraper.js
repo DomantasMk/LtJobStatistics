@@ -118,7 +118,7 @@ module.exports.startScrape = async function (url) {
     console.log('Started scraping');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2' });
+    await page.goto(url, { waitUntil: 'networkidle0' });
     let fullUrls = [];
     let fullScraped = [];
 
@@ -129,14 +129,14 @@ module.exports.startScrape = async function (url) {
     //Loop thru each page and get cv urls
     console.log('Getting all job urls');
     for (let i = 0; i < pagesUrls.length; i++) {
-        await page.goto(pagesUrls[i], { waitUntil: 'networkidle2' });
+        await page.goto(pagesUrls[i], { waitUntil: 'networkidle0' });
         const urls = await scrapeOutside(page);
         fullUrls = fullUrls.concat(urls);
     }
 
     console.log('Scrapping job insides');
     for (let i = 0; i < fullUrls.length; i++) {
-        await page.goto(fullUrls[i], { waitUntil: 'networkidle2' });
+        await page.goto(fullUrls[i], { waitUntil: 'networkidle0' });
         let info = await scrapeInside(page);
         fullScraped.push(info);
     }

@@ -52,26 +52,25 @@ const findKeywords = (jobsObject, _keywords) => {
     }
     return jobsObject;
 };
-const findTechnologies = (jobsObject, keywords, website) =>{
+const findTechnologies = (jobsObject, keywords, website) => {
     let listOfTechnologies = [];
-    for(let i = 0; i<keywords.length; i++)
-    {
+    for (let i = 0; i < keywords.length; i++) {
         let technology = {
-            title:keywords[i],
-            count:0,
-            average_salary:0,
-            website:website,
-        }
-        for(let y = 0; y<jobsObject.length; y++){
-            if(jobsObject[y].keywords.includes(keywords[i])){
+            title: keywords[i],
+            count: 0,
+            average_salary: 0,
+            website: website,
+        };
+        for (let y = 0; y < jobsObject.length; y++) {
+            if (jobsObject[y].keywords.includes(keywords[i])) {
                 technology.count++;
-              }
+            }
         }
         listOfTechnologies.push(technology);
     }
-    
+
     return listOfTechnologies;
-}
+};
 const addToDatabase = async (_Job, jobsObject) => {
     try {
         await _Job.insertMany(jobsObject);
@@ -80,7 +79,33 @@ const addToDatabase = async (_Job, jobsObject) => {
     }
 };
 
+const findSalary = (jobsObject) => {
+    for (let i = 0; i < jobsObject.length; i++) {
+        let regex = /\d+/g;
+        let string = jobsObject[i].salary;
+        let matches = string.match(regex); // creates array from matches
+
+        if (matches === null) {
+            jobsObject[i].min_salary = null;
+            jobsObject[i].max_salary = null;
+        } else {
+            if (matches[0] !== undefined) {
+                jobsObject[i].min_salary = parseFloat(matches[0]);
+            } else {
+                jobsObject[i].min_salary = null;
+            }
+            if (matches[1] !== undefined) {
+                jobsObject[i].max_salary = parseFloat(matches[1]);
+            } else {
+                jobsObject[i].max_salary = null;
+            }
+        }
+    }
+    return jobsObject;
+};
+
 exports.findKeywords = findKeywords;
 exports.keywords = keywords;
 exports.addToDatabase = addToDatabase;
 exports.findTechnologies = findTechnologies;
+exports.findSalary = findSalary;
