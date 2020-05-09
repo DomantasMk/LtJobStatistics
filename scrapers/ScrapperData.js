@@ -37,7 +37,7 @@ const findKeywords = (jobsObject, _keywords) => {
     for (let i = 0; i < jobsObject.length; i++) {
         let foundedKeywords = [];
         for (let j = 0; j < _keywords.length; j++) {
-            if (jobsObject[i].text.toLowerCase().includes(_keywords[j] + ' ')) {
+            if (jobsObject[i].text.toLowerCase().includes(_keywords[j] + ' ') || jobsObject[i].text.toLowerCase().includes(_keywords[j] + ',')) {
                 foundedKeywords.push(_keywords[j]);
             }
         }
