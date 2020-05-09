@@ -52,7 +52,26 @@ const findKeywords = (jobsObject, _keywords) => {
     }
     return jobsObject;
 };
-
+const findTechnologies = (jobsObject, keywords, website) =>{
+    let listOfTechnologies = [];
+    for(let i = 0; i<keywords.length; i++)
+    {
+        let technology = {
+            title:keywords[i],
+            count:0,
+            average_salary:0,
+            website:website,
+        }
+        for(let y = 0; y<jobsObject.length; y++){
+            if(jobsObject[y].keywords.includes(keywords[i])){
+                technology.count++;
+              }
+        }
+        listOfTechnologies.push(technology);
+    }
+    
+    return listOfTechnologies;
+}
 const addToDatabase = async (_Job, jobsObject) => {
     try {
         await _Job.insertMany(jobsObject);
@@ -64,3 +83,4 @@ const addToDatabase = async (_Job, jobsObject) => {
 exports.findKeywords = findKeywords;
 exports.keywords = keywords;
 exports.addToDatabase = addToDatabase;
+exports.findTechnologies = findTechnologies;

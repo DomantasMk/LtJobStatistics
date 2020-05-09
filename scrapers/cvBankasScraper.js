@@ -111,11 +111,7 @@ async function scrapeGivenLinks(arrayOfLinks) {
     return ListingsObjectsArray;
 }
 
-<<<<<<< HEAD
-module.exports.startScrape = async function scrapeALLPAGES(){
-=======
 module.exports.startScrape = async function scrapeALLPAGES() {
->>>>>>> 172c15b6807439d5f88ab38e195bac902225e4d9
     let mashedArray = [];
     for (let i = 1; i <= 1; i++) {
         let urls = await scrapeListingsUrls(
