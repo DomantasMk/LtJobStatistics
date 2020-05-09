@@ -108,8 +108,6 @@ async function scrapeGivenLinks(arrayOfLinks){
     return ListingsObjectsArray;
 }
 
-
-
 module.exports.startScrape = async function scrapeALLPAGES(){
     let mashedArray = [];
     for(let i = 1; i <=7; i++){
