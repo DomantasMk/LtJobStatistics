@@ -20,6 +20,7 @@
     },
     "homepage": "https://github.com/DomantasMk/LtJobStatistics#readme",
     "dependencies": {
+        "axios": "^0.19.2",
         "config": "^3.3.1",
         "express": "^4.17.1",
         "mongoose": "^5.9.13",
