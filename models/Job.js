@@ -18,6 +18,9 @@ const JobsSchema = new mongoose.Schema({
     company: {
         type: String,
     },
+    website: {
+        type: String,
+    },
     date_added_to_db: {
         type: Date,
         default: Date.now,

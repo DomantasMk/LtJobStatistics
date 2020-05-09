@@ -7,17 +7,18 @@ async function scrapeInside(page) {
         let company = null;
         let job_posted_date = null;
         let salary = null;
+        let website = 'cv.lt';
 
         try {
             job_title = document.querySelector('#jobCont01 > h1').innerHTML;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
 
         try {
             text = document.querySelector('#jobTxtRight').innerText;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
 
         try {
@@ -25,7 +26,7 @@ async function scrapeInside(page) {
                 "meta[itemprop='hiringOrganization']"
             ).content;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
 
         try {
@@ -33,14 +34,14 @@ async function scrapeInside(page) {
                 "meta[itemprop='datePosted']"
             ).content;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
 
         try {
             salary = document.querySelector("meta[itemprop='baseSalary']")
                 .content;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
 
         return {
@@ -49,9 +50,11 @@ async function scrapeInside(page) {
             company,
             job_posted_date,
             salary,
+            website,
         };
     });
 
+    console.log('Inner scrapped...');
     return scrappedInfo;
 }
 
@@ -59,9 +62,16 @@ async function scrapeOutside(page) {
     try {
         const jobUrls = await page.evaluate(() => {
             let urls = [];
-            let itemsWithUrls = document.querySelectorAll(
-                'a[itemprop="title"]'
-            );
+
+            try {
+                let itemsWithUrls = document.querySelectorAll(
+                    'a[itemprop="title"]'
+                );
+            } catch (error) {
+                console.log(error.message);
+                console.log('Scrape outside failed to find elements');
+            }
+
             for (let i = 0; i < itemsWithUrls.length; i++) {
                 urls.push(itemsWithUrls[i].href);
             }
@@ -79,11 +89,18 @@ async function getPagesUrls(page) {
     try {
         const urls = await page.evaluate(() => {
             let urls = [];
-            let items = document
-                .querySelector('.paging-list')
-                .querySelector('.has-sub')
-                .querySelector('ul')
-                .getElementsByTagName('a');
+
+            try {
+                let items = document
+                    .querySelector('.paging-list')
+                    .querySelector('.has-sub')
+                    .querySelector('ul')
+                    .getElementsByTagName('a');
+            } catch (error) {
+                console.log(error.message);
+                console.log('failed to find pages URLS ');
+            }
+
             for (let i = 0; i < items.length; i++) {
                 urls.push(items[i].href);
             }
