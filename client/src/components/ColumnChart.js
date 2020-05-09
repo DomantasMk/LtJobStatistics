@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 export default class ColumnChart extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -52,6 +53,9 @@ export default class ColumnChart extends React.Component {
                 }
             },
         };
+    }
+    componentDidMount(){
+        fetch('http://localhost:5000/api/main/Technologies/1').then(res => res.json()).then(data => console.log(data)).catch(err => console.log(err));
     }
 
     render() {
