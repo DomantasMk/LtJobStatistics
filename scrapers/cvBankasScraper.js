@@ -111,7 +111,7 @@ async function scrapeGivenLinks(arrayOfLinks){
 
 
 module.exports.startScrape = async function scrapeALLPAGES(){
-    for(let i = 1; i <=1; i++){
+    for(let i = 1; i <=7; i++){
     await scrapeListingsUrls(`https://www.cvbankas.lt/?padalinys%5B0%5D=76&page=${i}`)
     .then(
         linkArray =>{scrapeGivenLinks(linkArray).then(ListingsObjectsArray =>{
