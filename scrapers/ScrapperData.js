@@ -3,7 +3,7 @@ const keywords = [
     'javascript',
     'python',
     'java',
-    'c++',
+    'c\\+\\+',
     'php',
     'swift',
     'golang',
@@ -31,13 +31,19 @@ const keywords = [
     'asp.net',
     'asp',
     'js',
+    'back-end',
+    'front-end',
 ];
 
 const findKeywords = (jobsObject, _keywords) => {
     for (let i = 0; i < jobsObject.length; i++) {
         let foundedKeywords = [];
         for (let j = 0; j < _keywords.length; j++) {
-            if (jobsObject[i].text.toLowerCase().includes(_keywords[j] + ' ') || jobsObject[i].text.toLowerCase().includes(_keywords[j] + ',')) {
+            if (
+                new RegExp('\\b' + _keywords[j] + '(?!\\w)').test(
+                    jobsObject[i].text.toLowerCase()
+                )
+            ) {
                 foundedKeywords.push(_keywords[j]);
             }
         }
