@@ -63,7 +63,7 @@ async function scrapeJobListing(url, page){
     }*/
     return {
         job_title:jobTitleTextValue,
-        text:jobDescriptionTextValue.replace(/\s/g, ''),
+        text:jobDescriptionTextValue,
         company:CompanyTitleTextValue,
         job_posted_date:timePosted.split(' ')[0],
         salary:jobSalaryTextValue,
@@ -103,7 +103,7 @@ async function scrapeGivenLinks(arrayOfLinks){
         ListingsObjectsArray.push(await scrapeJobListing(arrayOfLinks[i], page));
     }
 
-    console.log(ListingsObjectsArray);
+    //console.log(ListingsObjectsArray);
     await browser.close();
     return ListingsObjectsArray;
 }
@@ -111,17 +111,11 @@ async function scrapeGivenLinks(arrayOfLinks){
 
 
 module.exports.startScrape = async function scrapeALLPAGES(){
+    let mashedArray = [];
     for(let i = 1; i <=7; i++){
-    await scrapeListingsUrls(`https://www.cvbankas.lt/?padalinys%5B0%5D=76&page=${i}`)
-    .then(
-        linkArray =>{scrapeGivenLinks(linkArray).then(ListingsObjectsArray =>{
-            return ListingsObjectsArray;
-        });}
-    ).catch(
-        (err) =>{}
-    );
+        let urls = await scrapeListingsUrls(`https://www.cvbankas.lt/?padalinys%5B0%5D=76&page=${i}`);
+        let listings = await scrapeGivenLinks(urls);
+        mashedArray = [...mashedArray, ...listings];
+    }
+    return mashedArray;
 }
-}
-
-
-
