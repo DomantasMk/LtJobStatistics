@@ -13,6 +13,6 @@ cvBankasScrapper
         console.log(jobsObject);
         const jobsWithKeywords = findKeywords(jobsObject, keywords);
         addToDatabase(Job, jobsWithKeywords).then((e) => {
-            console.log('Finished adding to DB');
+            console.log('Finished adding to DB (cv.lt)');
         });
     });

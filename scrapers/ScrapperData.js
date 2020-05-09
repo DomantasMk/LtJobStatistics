@@ -28,6 +28,9 @@ const keywords = [
     'backend',
     'frontend',
     'fullstack',
+    'asp.net',
+    'asp',
+    'js',
 ];
 
 const findKeywords = (jobsObject, _keywords) => {
