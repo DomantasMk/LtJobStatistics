@@ -67,7 +67,7 @@ async function scrapeJobListing(url, page){
         company:CompanyTitleTextValue,
         job_posted_date:timePosted.split(' ')[0],
         salary:jobSalaryTextValue,
-        website:"CvBankas",
+        website:"CvBankas.lt",
 
     }
 }
