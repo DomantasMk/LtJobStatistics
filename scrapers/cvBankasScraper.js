@@ -4,43 +4,55 @@ async function scrapeJobListing(url, page){
 
     await page.goto(url);
 
+    let jobTitleTextValue = "";
+    let jobSalaryTextValue = "";
+    let jobDescriptionTextValue = "";
+    let CompanyTitleTextValue = "";
+    let timePosted ="";
     try{
         const [jobTitle] = await page.$x(`//*[@id="jobad_heading1"]`);
         const jobTitleText = await jobTitle.getProperty("textContent");
-        const jobTitleTextValue = await jobTitleText.jsonValue(); // job title
-        console.log(`Title : ${jobTitleTextValue}`);
+        jobTitleTextValue = await jobTitleText.jsonValue(); // job title
+        //console.log(`Title : ${jobTitleTextValue}`);
     }
     catch{
-        console.log("Title : notFound");
+        //console.log("Title : notFound");
     }
     try{
         const [jobSalary] = await page.$x(`//*[@id="jobad_header"]/div[1]/span/span/span/span[1]/span[1]`);
         const jobSalaryText = await jobSalary.getProperty("textContent");
-        const jobSalaryTextValue = await jobSalaryText.jsonValue(); // job salary
-        console.log(`Salary : ${jobSalaryTextValue}`); 
+        jobSalaryTextValue = await jobSalaryText.jsonValue(); // job salary
+        //console.log(`Salary : ${jobSalaryTextValue}`); 
     }
     catch{
-        console.log("Salary : notFound");
+        //console.log("Salary : notFound");
     }
     try{
         const [jobDescription] = await page.$x(`//*[@id="jobad_content_main"]/section`);
         const jobDescriptionText = await jobDescription.getProperty("textContent");
-        const jobDescriptionTextValue = await jobDescriptionText.jsonValue(); // job description
-        console.log(`Description : ${jobDescriptionTextValue.replace(/\s/g, '')}`);
+        jobDescriptionTextValue = await jobDescriptionText.jsonValue(); // job description
+        //console.log(`Description : ${jobDescriptionTextValue.replace(/\s/g, '')}`);
     }
     catch{
-        console.log("Description : not found");
+       //console.log("Description : not found");
     }
     try{
         const [CompanyTitle] = await page.$x(`//*[@id="jobad_company_title"]`);
         const CompanyTitleText = await CompanyTitle.getProperty("textContent");
-        const CompanyTitleTextValue = await CompanyTitleText.jsonValue(); // job description
-        console.log(`CompanyTitle : ${CompanyTitleTextValue}`);
+        CompanyTitleTextValue = await CompanyTitleText.jsonValue(); // job description
+        //console.log(`CompanyTitle : ${CompanyTitleTextValue}`);
     }
     catch{
-        console.log("CompanyTitle : not found");
+        //console.log("CompanyTitle : not found");
     }
     try{
+        timePosted = await page.$eval(`meta[itemprop="datePosted"]`, element => element.content);
+        //console.log(`TimePOsted : ${timePosted.split(' ')[0]}`);
+    }
+    catch{
+        //console.log("TimePOsted : not found");
+    }
+    /*try{ JOB LOCATION
         const [JobLocation] = await page.$x(`//*[@id="jobad_location"]/span/a/span`);
         const JobLocationText = await JobLocation.getProperty("textContent");
         const JobLocationTextValue = await JobLocationText.jsonValue(); // job description
@@ -48,13 +60,15 @@ async function scrapeJobListing(url, page){
     }
     catch{
         console.log("Location : not found");
-    }
-    try{
-        const timePosted = await page.$eval(`meta[itemprop="datePosted"]`, element => element.content);
-        console.log(`TimePOsted : ${timePosted.split(' ')[0]}`);
-    }
-    catch{
-        console.log("TimePOsted : not found");
+    }*/
+    return {
+        job_title:jobTitleTextValue,
+        text:jobDescriptionTextValue.replace(/\s/g, ''),
+        company:CompanyTitleTextValue,
+        job_posted_date:timePosted.split(' ')[0],
+        salary:jobSalaryTextValue,
+        website:"CvBankas",
+
     }
 }
 
@@ -83,26 +97,31 @@ async function scrapeGivenLinks(arrayOfLinks){
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
+    let ListingsObjectsArray = []
+
     for(let i = 0; i < arrayOfLinks.length ;i++){
-        await scrapeJobListing(arrayOfLinks[i], page);
-        console.log("------------");
+        ListingsObjectsArray.push(await scrapeJobListing(arrayOfLinks[i], page));
     }
 
-
+    console.log(ListingsObjectsArray);
     await browser.close();
+    return ListingsObjectsArray;
 }
 
-async function scrapeALLPAGES(){
+
+
+module.exports.startScrape = async function scrapeALLPAGES(){
     for(let i = 1; i <=1; i++){
-        await scrapeListingsUrls(`https://www.cvbankas.lt/?padalinys%5B0%5D=76&page=${i}`)
-        .then(
-            linkArray =>{scrapeGivenLinks(linkArray);}
-        ).catch(
-            (err) =>{console.log(err)}
-        );
-    }
+    await scrapeListingsUrls(`https://www.cvbankas.lt/?padalinys%5B0%5D=76&page=${i}`)
+    .then(
+        linkArray =>{scrapeGivenLinks(linkArray).then(ListingsObjectsArray =>{
+            return ListingsObjectsArray;
+        });}
+    ).catch(
+        (err) =>{}
+    );
 }
-scrapeALLPAGES();
+}
 
 
 
