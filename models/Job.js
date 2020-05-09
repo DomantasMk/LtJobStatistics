@@ -12,8 +12,11 @@ const JobsSchema = new mongoose.Schema({
     job_posted_date: {
         type: String,
     },
-    salary: {
-        type: String,
+    min_salary: {
+        type: Number,
+    },
+    max_salary: {
+        type: Number,
     },
     company: {
         type: String,

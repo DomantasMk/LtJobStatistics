@@ -61,6 +61,32 @@ const addToDatabase = async (_Job, jobsObject) => {
     }
 };
 
+const findSalary = (jobsObject) => {
+    for (let i = 0; i < jobsObject.length; i++) {
+        let regex = /\d+/g;
+        let string = jobsObject[i].salary;
+        let matches = string.match(regex); // creates array from matches
+
+        if (matches === null) {
+            jobsObject[i].min_salary = null;
+            jobsObject[i].max_salary = null;
+        } else {
+            if (matches[0] !== undefined) {
+                jobsObject[i].min_salary = parseFloat(matches[0]);
+            } else {
+                jobsObject[i].min_salary = null;
+            }
+            if (matches[1] !== undefined) {
+                jobsObject[i].max_salary = parseFloat(matches[1]);
+            } else {
+                jobsObject[i].max_salary = null;
+            }
+        }
+    }
+    return jobsObject;
+};
+
 exports.findKeywords = findKeywords;
 exports.keywords = keywords;
 exports.addToDatabase = addToDatabase;
+exports.findSalary = findSalary;
