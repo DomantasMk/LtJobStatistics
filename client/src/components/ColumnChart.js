@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
-import axios from 'axios';
+
 export default class ColumnChart extends React.Component {
     constructor(props) {
         super(props);
@@ -8,7 +8,7 @@ export default class ColumnChart extends React.Component {
         this.state = {
             series: [
                 {
-                    data: [100, 22, 10, 28, 16, 21, 13, 30], //Series of data for the chart
+                    data: props.counts, //Series of data for the chart
                 },
             ],
             options: {
@@ -21,7 +21,7 @@ export default class ColumnChart extends React.Component {
                         },
                     },
                 },
-                colors: ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800'],
+                colors: ['#2E93fA', '#2E93fA', '#2E93fA', '#2E93fA', '#2E93fA'],
                 plotOptions: {
                     bar: {
                         columnWidth: '45%',
@@ -29,32 +29,19 @@ export default class ColumnChart extends React.Component {
                     },
                 },
                 dataLabels: {
-                    enabled: false,
+                    enabled: true,
                 },
                 legend: {
                     show: false,
                 },
                 xaxis: {
                     //series of data labels for the chart
-                    categories: [
-                        'Dick',
-                        'Javascript',
-                        'Javascript',
-                        'Javascript',
-                        'Javascript',
-                        'Javascript',
-                        'Javascript',
-                        'Javascript',
-                    ],
+                    categories: props.titles,
                     labels: {
                         style: {
-                            colors: [
+                            colors: 
                                 '#2E93fA',
-                                '#66DA26',
-                                '#546E7A',
-                                '#E91E63',
-                                '#FF9800',
-                            ],
+                            
                             fontSize: '12px',
                         },
                     },
@@ -62,15 +49,8 @@ export default class ColumnChart extends React.Component {
             },
         };
     }
-    componentDidMount() {
-        axios
-            .get(`/api/main/Technologies/1`)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    componentDidMount(){
+        
     }
 
     render() {
