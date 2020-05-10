@@ -14,14 +14,19 @@ connectDB();
 
 cvBankasScrapper.startScrape().then((jobsObject) => {
     const jobsWithKeywords = findKeywords(jobsObject, keywords);
-    const jobsWithSalaray = findSalary(jobsWithKeywords);
-    const Technologies = findTechnologies(jobsObject, keywords, 'CvBankas.lt');
+    const jobsWithSalary = findSalary(jobsWithKeywords);
+    const Technologies = findTechnologies(
+        jobsWithSalary,
+        keywords,
+        'CvBankas.lt'
+    );
+    console.log(Technologies);
     //Separate technologies for every keyword
     addToDatabase(Technology, Technologies).then((e) => {
-        console.log('Finished adding DB technologies');
+        console.log('Finished technologies to db');
     });
 
-    addToDatabase(Job, jobsWithSalaray).then((e) => {
+    addToDatabase(Job, jobsWithSalary).then((e) => {
         console.log('Finished adding to DB (cvBankas.lt)');
     });
 });

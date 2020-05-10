@@ -55,6 +55,7 @@ const findKeywords = (jobsObject, _keywords) => {
 const findTechnologies = (jobsObject, keywords, website) => {
     let listOfTechnologies = [];
     for (let i = 0; i < keywords.length; i++) {
+        let averageArray = [];
         let technology = {
             title: keywords[i],
             count: 0,
@@ -64,13 +65,44 @@ const findTechnologies = (jobsObject, keywords, website) => {
         for (let y = 0; y < jobsObject.length; y++) {
             if (jobsObject[y].keywords.includes(keywords[i])) {
                 technology.count++;
+
+                if (jobsObject[y].min_salary !== null) {
+                    averageArray.push(
+                        getAverageSalaryFromMinMax(jobsObject[y])
+                    );
+                }
             }
         }
+        technology.average_salary = getAverageSalary(averageArray);
         listOfTechnologies.push(technology);
     }
-
     return listOfTechnologies;
 };
+
+const getAverageSalary = (averageArray) => {
+    try {
+        const sum = averageArray.reduce((a, b) => {
+            return a + b;
+        });
+
+        const average_salary = sum / averageArray.length;
+        return Math.round(average_salary);
+    } catch (error) {
+        return 0;
+    }
+};
+
+const getAverageSalaryFromMinMax = (jobsObject) => {
+    let average = null;
+
+    if (jobsObject.max_salary !== null) {
+        average = (jobsObject.min_salary + jobsObject.max_salary) / 2;
+    } else if (jobsObject.min_salary !== null) {
+        average = jobsObject.min_salary;
+    }
+    return average;
+};
+
 const addToDatabase = async (_Job, jobsObject) => {
     try {
         await _Job.insertMany(jobsObject);
