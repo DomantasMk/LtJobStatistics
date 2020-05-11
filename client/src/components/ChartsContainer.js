@@ -1,47 +1,54 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import ColumnChart from './ColumnChart';
 import PieChart from './PieChart';
 import axios from 'axios';
 
-export default class ChartsContainer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { series: [0,0], titles: ["",""] }
-      }
-    componentDidMount() {
+const ChartsContainer = (props) => {
+    const [techChartStates, setTechChartStates] = useState({
+        series: [0, 0],
+        titles: ['', ''],
+    });
+
+    useEffect(() => {
         axios
             .get(`/api/main/Technologies/10`)
             .then((res) => {
-                let counts = [];
-                let names = [];
-                res.data.map(obj => {
-                    counts.push(obj.count);
-                    names.push(obj.title);
+                let data = {
+                    series: [],
+                    titles: [],
+                };
+
+                res.data.forEach((obj) => {
+                    data.series.push(obj.count);
+                    data.titles.push(obj.title);
                 });
 
-                this.setState({
-                    series:counts,
-                    titles:names});
-                return res.data;
+                setTechChartStates(data);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }
+    }, []);
 
-    render() {
-        return (
-            <div>
-                <Container maxWidth="lg">
-                    <ColumnChart counts={this.state.series} titles={this.state.titles} key={this.state.series}/>
-                    
-                    <Box display="flex" justifyContent="center">
-                        <PieChart counts={this.state.series} titles={this.state.titles} key={this.state.series}/>
-                    </Box>
-                </Container>
-            </div>
-        )
-    }
-}
+    return (
+        <Container maxWidth='lg'>
+            <ColumnChart
+                counts={techChartStates.series}
+                titles={techChartStates.titles}
+                key={techChartStates.series}
+            />
+
+            <Box display='flex' justifyContent='center'>
+                <PieChart
+                    counts={techChartStates.series}
+                    titles={techChartStates.titles}
+                    key={techChartStates.series}
+                />
+            </Box>
+        </Container>
+    );
+};
+
+export default ChartsContainer;

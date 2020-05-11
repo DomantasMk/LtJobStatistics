@@ -1,35 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-export default class PieChart extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            series: props.counts,
-            options: {
-                chart: {
-                    width: 380,
-                    type: 'pie',
-                },
-                labels: props.titles,
-                responsive: [{
+import PropTypes from 'prop-types';
+
+const PieChart = ({ counts, titles }) => {
+    const [chartState, setChartState] = useState({
+        series: counts,
+        options: {
+            chart: {
+                width: 380,
+                type: 'pie',
+            },
+            labels: titles,
+            responsive: [
+                {
                     breakpoint: 480,
                     options: {
                         chart: {
-                            width: 200
+                            width: 200,
                         },
                         legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }]
-            },
-        };
-    }
-    render() {
-        return (
-            <div id="chart">
-                <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width={380} />
-            </div>
-        );
-    }
-}
+                            position: 'bottom',
+                        },
+                    },
+                },
+            ],
+        },
+    });
+
+    return (
+        <div id='pieChart'>
+            <ReactApexChart
+                options={chartState.options}
+                series={chartState.series}
+                type='pie'
+                width={380}
+            />
+        </div>
+    );
+};
+
+PieChart.propTypes = {
+    counts: PropTypes.array.isRequired,
+    titles: PropTypes.array.isRequired,
+};
+
+export default PieChart;
