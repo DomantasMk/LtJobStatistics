@@ -113,7 +113,7 @@ const addToDatabase = async (_Job, jobsObject) => {
 
 const findSalary = (jobsObject) => {
     for (let i = 0; i < jobsObject.length; i++) {
-        let regex = /\d+/g;
+        let regex = /[\d\.]+/g;
         let string = jobsObject[i].salary;
         let matches = string.match(regex); // creates array from matches
 
@@ -122,11 +122,13 @@ const findSalary = (jobsObject) => {
             jobsObject[i].max_salary = null;
         } else {
             if (matches[0] !== undefined) {
+                matches[0] = matches[0].replace('.', '');
                 jobsObject[i].min_salary = parseFloat(matches[0]);
             } else {
                 jobsObject[i].min_salary = null;
             }
             if (matches[1] !== undefined) {
+                matches[1] = matches[1].replace('.', '');
                 jobsObject[i].max_salary = parseFloat(matches[1]);
             } else {
                 jobsObject[i].max_salary = null;

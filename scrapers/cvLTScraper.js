@@ -6,7 +6,7 @@ async function scrapeInside(page) {
         let text = null;
         let company = null;
         let job_posted_date = null;
-        let salary = null;
+        let salary = '0';
         let website = 'cv.lt';
 
         try {
@@ -67,13 +67,13 @@ async function scrapeOutside(page) {
                 let itemsWithUrls = document.querySelectorAll(
                     'a[itemprop="title"]'
                 );
+
+                for (let i = 0; i < itemsWithUrls.length; i++) {
+                    urls.push(itemsWithUrls[i].href);
+                }
             } catch (error) {
                 console.log(error.message);
                 console.log('Scrape outside failed to find elements');
-            }
-
-            for (let i = 0; i < itemsWithUrls.length; i++) {
-                urls.push(itemsWithUrls[i].href);
             }
 
             return urls;
@@ -96,15 +96,14 @@ async function getPagesUrls(page) {
                     .querySelector('.has-sub')
                     .querySelector('ul')
                     .getElementsByTagName('a');
+
+                for (let i = 0; i < items.length; i++) {
+                    urls.push(items[i].href);
+                }
             } catch (error) {
                 console.log(error.message);
                 console.log('failed to find pages URLS ');
             }
-
-            for (let i = 0; i < items.length; i++) {
-                urls.push(items[i].href);
-            }
-
             return urls;
         });
 
