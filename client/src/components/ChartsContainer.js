@@ -30,7 +30,6 @@ export default class ChartsContainer extends Component {
                 console.log(err);
             });
     }
-
     render() {
         return (
             <div>

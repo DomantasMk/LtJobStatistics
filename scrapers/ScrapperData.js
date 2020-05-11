@@ -1,50 +1,50 @@
 const keywords = [
-    'react',
-    'javascript',
-    'python',
-    'java',
-    'c\\+\\+',
-    'php',
-    'swift',
-    'golang',
-    'c#',
-    'matlab',
-    'bash',
-    'typescript',
-    'ruby',
-    'html',
-    'css',
-    'kotlin',
-    'f#',
-    'assembly',
-    'spring',
-    'laravel',
-    'django',
-    'express',
-    'mongo',
-    'angular',
-    'vue',
-    'sass',
-    'backend',
-    'frontend',
-    'fullstack',
-    'asp.net',
-    'asp',
-    'js',
-    'back-end',
-    'front-end',
+    ['react', 'react.js'],
+    ['javascript', 'js', 'java script'],
+    ['python'],
+    ['java'],
+    ['c\\+\\+'],
+    ['php'],
+    ['swift'],
+    ['golang'],
+    ['c#'],
+    ['matlab'],
+    ['bash'],
+    ['typescript', 'ts'],
+    ['ruby'],
+    ['html'],
+    ['css'],
+    ['kotlin'],
+    ['f#'],
+    ['assembly'],
+    ['spring'],
+    ['laravel'],
+    ['django'],
+    ['express'],
+    ['mongo'],
+    ['angular', 'angular.js'],
+    ['vue', 'vue.js'],
+    ['sass'],
+    ['fullstack'],
+    ['asp.net', 'asp'],
+    ['back-end', 'backend'],
+    ['front-end', 'frontend'],
+    ['node'],
 ];
 
 const findKeywords = (jobsObject, _keywords) => {
     for (let i = 0; i < jobsObject.length; i++) {
         let foundedKeywords = [];
         for (let j = 0; j < _keywords.length; j++) {
-            if (
-                new RegExp('\\b' + _keywords[j] + '(?!\\w)').test(
-                    jobsObject[i].text.toLowerCase()
-                )
-            ) {
-                foundedKeywords.push(_keywords[j]);
+            for(let y = 0; y < _keywords[j].length; y++){
+                if (
+                    new RegExp('\\b' + _keywords[j][y] + '(?!\\w)').test(
+                        jobsObject[i].text.toLowerCase()
+                    )
+                ) {
+                    foundedKeywords.push(_keywords[j][0]);
+                    break;
+                }
             }
         }
         //Add keywords to same jobsObject object for further use
