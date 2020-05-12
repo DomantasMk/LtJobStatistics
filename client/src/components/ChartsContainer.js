@@ -4,6 +4,7 @@ import Box from '@material-ui/core/Box';
 import ColumnChart from './ColumnChart';
 import PieChart from './PieChart';
 import axios from 'axios';
+import MultipleSelect from './MultipleSelect';
 
 const ChartsContainer = (props) => {
     const [techChartStates, setTechChartStates] = useState({
@@ -34,6 +35,7 @@ const ChartsContainer = (props) => {
 
     return (
         <Container maxWidth='lg'>
+            <MultipleSelect />
             <ColumnChart
                 counts={techChartStates.series}
                 titles={techChartStates.titles}
