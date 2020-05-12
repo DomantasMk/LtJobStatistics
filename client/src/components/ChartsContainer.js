@@ -5,6 +5,7 @@ import ColumnChart from './ColumnChart';
 import PieChart from './PieChart';
 import axios from 'axios';
 import MultipleSelect from './MultipleSelect';
+import { ChartContext } from './ChartContext';
 
 const ChartsContainer = (props) => {
     const [techChartStates, setTechChartStates] = useState({
@@ -13,6 +14,7 @@ const ChartsContainer = (props) => {
     });
 
     const [keywords, setKeywords] = useState([]);
+    const [selectedKeywords, setSelectedKeywords] = useState([]);
 
     useEffect(() => {
         axios
@@ -46,20 +48,24 @@ const ChartsContainer = (props) => {
 
     return (
         <Container maxWidth='lg'>
-            <MultipleSelect selectList={keywords} />
-            <ColumnChart
-                counts={techChartStates.series}
-                titles={techChartStates.titles}
-                key={techChartStates.series}
-            />
-
-            <Box display='flex' justifyContent='center'>
-                <PieChart
+            <ChartContext.Provider
+                value={{ selectedKeywords, setSelectedKeywords }}
+            >
+                <MultipleSelect selectList={keywords} />
+                <ColumnChart
                     counts={techChartStates.series}
                     titles={techChartStates.titles}
                     key={techChartStates.series}
                 />
-            </Box>
+
+                <Box display='flex' justifyContent='center'>
+                    <PieChart
+                        counts={techChartStates.series}
+                        titles={techChartStates.titles}
+                        key={techChartStates.series}
+                    />
+                </Box>
+            </ChartContext.Provider>
         </Container>
     );
 };
