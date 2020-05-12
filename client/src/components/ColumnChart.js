@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import PropTypes from 'prop-types';
+import { ChartContext } from './ChartContext';
 
 const ColumnChart = ({ counts, titles }) => {
+    const { selectedKeywords, setSelectedKeywords } = useContext(ChartContext);
     const [chartState, setChartState] = useState({
         series: [
             {
+                name: 'Number',
                 data: counts, //Series of data for the chart
             },
         ],

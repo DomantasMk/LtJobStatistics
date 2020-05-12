@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -8,6 +8,7 @@ import {
     Chip,
     MenuItem,
 } from '@material-ui/core';
+import { ChartContext } from './ChartContext';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -25,21 +26,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MultipleSelect = ({ selectList }) => {
-    const [selectedData, setSelectedData] = useState([]);
+    const { selectedKeywords, setSelectedKeywords } = useContext(ChartContext);
 
     const handleChange = (event) => {
-        setSelectedData(event.target.value);
+        setSelectedKeywords(event.target.value);
     };
 
     const classes = useStyles();
     return (
         <FormControl className={classes.formControl}>
-            <InputLabel id='chart-select-label'>Chip</InputLabel>
+            <InputLabel id='chart-select-label'>Filter</InputLabel>
             <Select
                 labelId='chart-select-label'
                 multiple
                 id='chart-select'
-                value={selectedData}
+                value={selectedKeywords}
                 onChange={(e) => handleChange(e)}
                 renderValue={(selected) => (
                     <div className={classes.chips}>

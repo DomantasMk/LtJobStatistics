@@ -58,4 +58,15 @@ router.get('/keywords', async (req, res) => {
     }
 });
 
+// @route   GET api/main/keywords/technology
+// @desc    Get all keywords
+// @acess   Public
+// router.get('/keywords/technology', async (req, res) => {
+//     let array = JSON.parse(req.query.array);
+//     try {
+//     } catch (err) {
+//         res.status(500).send('Server error');
+//     }
+// });
+
 module.exports = router;
