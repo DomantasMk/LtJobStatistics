@@ -158,7 +158,3 @@ const findKeywords = (jobsObject, _keywords) => {
 };
 
 findKeywords(objects, keywords).map(obj =>{console.log(obj.keywords)});
-
-/*                
-             
-        */
