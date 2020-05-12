@@ -3,13 +3,15 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import ColumnChart from './ColumnChart';
 import PieChart from './PieChart';
+import SalaryChart from './SalaryContainer';
 import axios from 'axios';
 import MultipleSelect from './MultipleSelect';
 
 const ChartsContainer = (props) => {
     const [techChartStates, setTechChartStates] = useState({
-        series: [0, 0],
-        titles: ['', ''],
+        series: [],
+        titles: [],
+        average_salary: [0, 1],
     });
 
     const [keywords, setKeywords] = useState([]);
@@ -21,11 +23,13 @@ const ChartsContainer = (props) => {
                 let data = {
                     series: [],
                     titles: [],
+                    average_salary: [],
                 };
 
                 res.data.forEach((obj) => {
                     data.series.push(obj.count);
                     data.titles.push(obj.title);
+                    data.average_salary.push(obj.average_salary);
                 });
 
                 setTechChartStates(data);
@@ -60,6 +64,11 @@ const ChartsContainer = (props) => {
                     key={techChartStates.series}
                 />
             </Box>
+            <SalaryChart
+                counts={techChartStates.average_salary}
+                titles={techChartStates.titles}
+                key={techChartStates.average_salary}
+            />
         </Container>
     );
 };
