@@ -12,6 +12,8 @@ const ChartsContainer = (props) => {
         titles: ['', ''],
     });
 
+    const [keywords, setKeywords] = useState([]);
+
     useEffect(() => {
         axios
             .get(`/api/main/Technologies/10`)
@@ -31,11 +33,20 @@ const ChartsContainer = (props) => {
             .catch((err) => {
                 console.log(err);
             });
+
+        axios
+            .get(`/api/main/keywords`)
+            .then((res) => {
+                setKeywords(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
 
     return (
         <Container maxWidth='lg'>
-            <MultipleSelect />
+            <MultipleSelect selectList={keywords} />
             <ColumnChart
                 counts={techChartStates.series}
                 titles={techChartStates.titles}

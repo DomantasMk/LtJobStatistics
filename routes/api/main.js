@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Technology = require('../../models/Technology');
+const { keywords } = require('../../scrapers/ScrapperData');
 
 // @route   GET api/api
 // @desc    Desc
@@ -38,6 +39,20 @@ router.get('/Technologies/data/website', async (req, res) => {
         ).then((result) => {
             res.json(result);
         });
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+});
+
+// @route   GET api/main/keywords
+// @desc    Get all keywords
+// @acess   Public
+router.get('/keywords', async (req, res) => {
+    try {
+        let parsedKeywords = keywords.map((e) => {
+            return e[0];
+        });
+        res.json(parsedKeywords);
     } catch (err) {
         res.status(500).send('Server error');
     }

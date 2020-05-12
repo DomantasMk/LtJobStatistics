@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     FormControl,
     InputLabel,
     Select,
-    Input,
     Chip,
     MenuItem,
 } from '@material-ui/core';
-const keywords = ['javascript', 'c#', 'java'];
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MultipleSelect = (props) => {
+const MultipleSelect = ({ selectList }) => {
     const [selectedData, setSelectedData] = useState([]);
 
     const handleChange = (event) => {
@@ -43,7 +41,6 @@ const MultipleSelect = (props) => {
                 id='chart-select'
                 value={selectedData}
                 onChange={(e) => handleChange(e)}
-                input={<Input id='select-multiple-chip' />}
                 renderValue={(selected) => (
                     <div className={classes.chips}>
                         {selected.map((value) => (
@@ -57,9 +54,9 @@ const MultipleSelect = (props) => {
                 )}
                 //MenuProps={MenuProps}
             >
-                {keywords.map((keyword) => (
-                    <MenuItem key={keyword} value={keyword}>
-                        {keyword}
+                {selectList.map((item) => (
+                    <MenuItem key={item} value={item}>
+                        {item}
                     </MenuItem>
                 ))}
             </Select>
@@ -67,6 +64,8 @@ const MultipleSelect = (props) => {
     );
 };
 
-MultipleSelect.propTypes = {};
+MultipleSelect.propTypes = {
+    selectList: PropTypes.array.isRequired,
+};
 
 export default MultipleSelect;
