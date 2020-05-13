@@ -6,55 +6,70 @@ import PieChart from './PieChart';
 import SalaryChart from './SalaryContainer';
 import axios from 'axios';
 import MultipleSelect from './MultipleSelect';
-import { ChartContext } from './ChartContext';
 
 const ChartsContainer = (props) => {
     const [techChartStates, setTechChartStates] = useState({
         series: [],
         titles: [],
+    });
+    const [techSalaryChartStates, setTechSalaryChartStates] = useState({
+        salaryTitles:[''],
         average_salary: [0, 1],
     });
 
     const [keywords, setKeywords] = useState([]);
-    const [selectedKeywords, setSelectedKeywords] = useState([]);
 
     useEffect(() => {
-        axios
-            .get(`/api/main/Technologies/10`)
-            .then((res) => {
-                let data = {
-                    series: [],
-                    titles: [],
-                    average_salary: [],
-                };
+        //most common technologies
+            axios
+                .get(`/api/main/Technologies/10`)
+                .then((res) => {
+                    let data = {
+                        series: [],
+                        titles: [],
+                    };
 
-                res.data.forEach((obj) => {
-                    data.series.push(obj.count);
-                    data.titles.push(obj.title);
-                    data.average_salary.push(obj.average_salary);
+                    res.data.forEach((obj) => {
+                        data.series.push(obj.count);
+                        data.titles.push(obj.title);
+                    });
+
+                    setTechChartStates(data);
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
+                //best salary earning technologies
+            axios
+                .get(`/api/main/Technologies/salary/10`)
+                .then((res) => {
+                    let data = {
+                        salaryTitles: [],
+                        average_salary: [],
+                    };
 
-                setTechChartStates(data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+                    res.data.forEach((obj) => {
+                        data.salaryTitles.push(obj.title);
+                        data.average_salary.push(obj.average_salary);
+                    });
 
-        axios
-            .get(`/api/main/keywords`)
-            .then((res) => {
-                setKeywords(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+                    setTechSalaryChartStates(data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            axios
+                .get(`/api/main/keywords`)
+                .then((res) => {
+                    setKeywords(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
     }, []);
 
     return (
         <Container maxWidth='lg'>
-            <ChartContext.Provider
-                value={{ selectedKeywords, setSelectedKeywords }}
-            >
                 <MultipleSelect selectList={keywords} />
                 <ColumnChart
                     counts={techChartStates.series}
@@ -70,11 +85,10 @@ const ChartsContainer = (props) => {
                     />
                 </Box>
                 <SalaryChart
-                    counts={techChartStates.average_salary}
-                    titles={techChartStates.titles}
-                    key={techChartStates.average_salary}
+                    counts={techSalaryChartStates.average_salary}
+                    titles={techSalaryChartStates.salaryTitles}
+                    key={techSalaryChartStates.average_salary}
                 />
-            </ChartContext.Provider>
         </Container>
     );
 };
