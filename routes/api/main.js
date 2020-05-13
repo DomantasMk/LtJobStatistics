@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Technology = require('../../models/Technology');
+const Main = require('../../models/Main');
 const { keywords } = require('../../scrapers/ScrapperData');
 
 // @route   GET api/api
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
 // @acess   Public
 
 router.get('/Technologies/:count', (req, res) => {
-    Technology.find()
+    Main.find()
         .sort({ count: 'descending' })
         .then((maps) => res.json(maps.slice(0, req.params.count)));
 });
@@ -57,16 +58,5 @@ router.get('/keywords', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
-// @route   GET api/main/keywords/technology
-// @desc    Get all keywords
-// @acess   Public
-// router.get('/keywords/technology', async (req, res) => {
-//     let array = JSON.parse(req.query.array);
-//     try {
-//     } catch (err) {
-//         res.status(500).send('Server error');
-//     }
-// });
 
 module.exports = router;

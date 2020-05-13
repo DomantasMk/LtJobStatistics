@@ -36,7 +36,7 @@ const findKeywords = (jobsObject, _keywords) => {
     for (let i = 0; i < jobsObject.length; i++) {
         let foundedKeywords = [];
         for (let j = 0; j < _keywords.length; j++) {
-            for(let y = 0; y < _keywords[j].length; y++){
+            for (let y = 0; y < _keywords[j].length; y++) {
                 if (
                     new RegExp('\\b' + _keywords[j][y] + '(?!\\w)').test(
                         jobsObject[i].text.toLowerCase()
@@ -103,9 +103,9 @@ const getAverageSalaryFromMinMax = (jobsObject) => {
     return average;
 };
 
-const addToDatabase = async (_Job, jobsObject) => {
+const addToDatabase = async (_Model, dataObject) => {
     try {
-        await _Job.insertMany(jobsObject);
+        await _Model.insertMany(dataObject);
     } catch (error) {
         console.log(error.message);
     }
