@@ -73,7 +73,6 @@ const ChartsContainer = (props) => {
 
     return (
         <Container maxWidth='lg'>
-            {console.log(selectedKeywords)}
             <MultipleSelect selectList={keywords} />
             <ColumnChart
                 counts={techChartStates.series}

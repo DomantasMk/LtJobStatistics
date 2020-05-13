@@ -51,6 +51,7 @@ const ColumnChart = ({ counts, titles }) => {
 
     return (
         <div id='chart'>
+            {console.log('rerender')}
             <ReactApexChart
                 options={chartState.options}
                 series={chartState.series}

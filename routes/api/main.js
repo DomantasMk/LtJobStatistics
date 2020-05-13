@@ -30,7 +30,7 @@ router.get('/Technologies/:count', (req, res) => {
 // @acess   Public
 
 router.get('/Technologies/salary/:count', (req, res) => {
-    Technology.find()
+    Main.find()
         .sort({ average_salary: 'descending' })
         .then((maps) => res.json(maps.slice(0, req.params.count)));
 });

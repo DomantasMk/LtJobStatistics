@@ -17,18 +17,30 @@ const combineData = async (keys) => {
                         count: 0,
                         average_salary: 0,
                     };
-                    let foundedNr = 0;
+                    let foundedAverage = [];
                     for (let j = 0; j < res.length; j++) {
                         if (keys[i][0] === res[j].title) {
                             dataForKeyword.count += res[j].count;
-                            dataForKeyword.average_salary +=
-                                res[j].average_salary;
-                            foundedNr++;
+
+                            let obj = {
+                                count: res[j].count,
+                                average_salary: res[j].average_salary,
+                            };
+                            foundedAverage.push(obj);
                         }
                     }
-                    if (dataForKeyword.average_salary !== 0) {
+
+                    //Counting weighted average
+                    let averageSalaryWeighted = 0;
+
+                    foundedAverage.forEach((item) => {
+                        averageSalaryWeighted +=
+                            item.count * item.average_salary;
+                    });
+
+                    if (averageSalaryWeighted !== 0) {
                         dataForKeyword.average_salary = Math.round(
-                            dataForKeyword.average_salary / foundedNr
+                            averageSalaryWeighted / dataForKeyword.count
                         );
                     }
 
@@ -37,7 +49,8 @@ const combineData = async (keys) => {
 
                 //Insert many to main table
                 addToDatabase(Main, fullData);
-                console.log('Successfully added to main db');
+
+                console.log('Successfully added to db');
             });
     } catch (err) {
         console.log(err);
