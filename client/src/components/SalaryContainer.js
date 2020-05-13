@@ -5,6 +5,7 @@ import ReactApexChart from 'react-apexcharts';
 export default function SalaryContainer({ counts, titles }) {
         const [chartState] = useState({
                 series: [{
+                  name:"Vid. Alga",
                   data: counts
                 }],
                 options: {

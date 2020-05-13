@@ -25,6 +25,16 @@ router.get('/Technologies/:count', (req, res) => {
         .then((maps) => res.json(maps.slice(0, req.params.count)));
 });
 
+// @route   GET api/main/Technologies/salary/:amount
+// @desc    amount is the salary value for each technlogy
+// @acess   Public
+
+router.get('/Technologies/salary/:count', (req, res) => {
+    Technology.find()
+        .sort({ average_salary: 'descending' })
+        .then((maps) => res.json(maps.slice(0, req.params.count)));
+});
+
 // @route   GET api/main/Technologies/website?array=[]
 // @desc    Get all technologies by website name
 // @acess   Public
