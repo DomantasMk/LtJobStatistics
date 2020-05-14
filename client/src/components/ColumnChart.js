@@ -7,10 +7,11 @@ const ColumnChart = ({ counts, titles }) => {
     const { selectedKeywords, setSelectedKeywords } = useContext(ChartContext);
 
     useEffect(() => {
-        setChartState({
+        setChartState((prevState) => ({
+            ...prevState,
             series: [{ data: counts }],
             options: { xaxis: { categories: titles } },
-        });
+        }));
     }, [counts, titles]);
 
     const [chartState, setChartState] = useState({
