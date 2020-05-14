@@ -84,6 +84,7 @@ const ChartsContainer = (props) => {
             <ColumnChart
                 counts={techChartStates.series}
                 titles={techChartStates.titles}
+                key={techChartStates.series}
             />
 
             <Box display='flex' justifyContent='center'>

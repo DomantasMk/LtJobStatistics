@@ -1,19 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import PropTypes from 'prop-types';
 import { ChartContext } from './ChartContext';
 
 const ColumnChart = ({ counts, titles }) => {
     const { selectedKeywords, setSelectedKeywords } = useContext(ChartContext);
-
-    useEffect(() => {
-        setChartState((prevState) => ({
-            ...prevState,
-            series: [{ data: counts }],
-            options: { xaxis: { categories: titles } },
-        }));
-    }, [counts, titles]);
-
     const [chartState, setChartState] = useState({
         series: [
             {
@@ -60,7 +51,6 @@ const ColumnChart = ({ counts, titles }) => {
 
     return (
         <div id='chart'>
-            {console.log(chartState)}
             <ReactApexChart
                 options={chartState.options}
                 series={chartState.series}
