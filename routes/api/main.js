@@ -25,6 +25,20 @@ router.get('/Technologies/:count', (req, res) => {
         .then((maps) => res.json(maps.slice(0, req.params.count)));
 });
 
+// @route   GET api/main/Technologies?keywords=[]
+// @desc    array is the array of keywords we wanna see in the charts
+// @acess   Public
+
+router.get('/Technologies', (req, res) => {
+    let keywords = JSON.parse(req.query.keywords);
+    Main.find({
+        'title': { $in: keywords}
+    })
+        .sort({ count: 'descending' })
+        .then(maps => res.json(maps));
+});
+
+
 // @route   GET api/main/Technologies/salary/:amount
 // @desc    amount is the salary value for each technlogy
 // @acess   Public
@@ -33,6 +47,20 @@ router.get('/Technologies/salary/:count', (req, res) => {
     Main.find()
         .sort({ average_salary: 'descending' })
         .then((maps) => res.json(maps.slice(0, req.params.count)));
+});
+
+
+// @route   GET api/main//TechnologiesSalaries?keywords=[]
+// @desc    array is the array of keywords we wanna see in the charts
+// @acess   Public
+
+router.get('/TechnologiesSalaries', (req, res) => {
+    let keywords = JSON.parse(req.query.keywords);
+    Main.find({
+        'title': { $in: keywords }
+    })
+        .sort({ average_salary: 'descending' })
+        .then(maps => res.json(maps));
 });
 
 // @route   GET api/main/Technologies/website?array=[]
