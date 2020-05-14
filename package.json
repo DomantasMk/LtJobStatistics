@@ -20,6 +20,7 @@
     },
     "homepage": "https://github.com/DomantasMk/LtJobStatistics#readme",
     "dependencies": {
+        "@material-ui/lab": "^4.0.0-alpha.53",
         "axios": "^0.19.2",
         "config": "^3.3.1",
         "express": "^4.17.1",
