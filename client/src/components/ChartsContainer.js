@@ -23,9 +23,15 @@ const ChartsContainer = (props) => {
     const [keywords, setKeywords] = useState([]);
 
     useEffect(() => {
+        let top10URI = `api/main/Technologies/10`;
+        let top10SalaryURI =`api/main/Technologies/salary/10`;
+        if(selectedKeywords.length > 0){
+            top10URI = `api/main/Technologies?keywords=[${selectedKeywords.map(kw => `"${encodeURIComponent(kw)}"`)}]`;
+            top10SalaryURI =`api/main/TechnologiesSalaries?keywords=[${selectedKeywords.map(kw => `"${encodeURIComponent(kw)}"`)}]`;
+        }
         //most common technologies
         axios
-            .get(`/api/main/Technologies/10`)
+            .get(top10URI)
             .then((res) => {
                 let data = {
                     series: [],
@@ -44,7 +50,7 @@ const ChartsContainer = (props) => {
             });
         //best salary earning technologies
         axios
-            .get(`/api/main/Technologies/salary/10`)
+            .get(top10SalaryURI)
             .then((res) => {
                 let data = {
                     salaryTitles: [],
@@ -69,9 +75,10 @@ const ChartsContainer = (props) => {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [selectedKeywords]);
 
     return (
+        
         <Container maxWidth='lg'>
             <MultipleSelect selectList={keywords} />
             <ColumnChart
