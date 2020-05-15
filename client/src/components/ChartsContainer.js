@@ -7,9 +7,24 @@ import SalaryChart from './SalaryContainer';
 import axios from 'axios';
 import MultipleSelect from './MultipleSelect';
 import { ChartContext } from './ChartContext';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    title: {
+        marginTop: theme.spacing(5),
+        marginBottom: theme.spacing(5),
+    },
+}));
 
 const ChartsContainer = (props) => {
-    const { selectedKeywords, setSelectedKeywords } = useContext(ChartContext);
+    const classes = useStyles();
+    const {
+        selectedKeywords,
+        setSelectedKeywords,
+        selectedKeywordsSalary,
+        setSelectedKeywordsSalary,
+    } = useContext(ChartContext);
 
     const [techChartStates, setTechChartStates] = useState({
         series: [],
@@ -24,12 +39,8 @@ const ChartsContainer = (props) => {
 
     useEffect(() => {
         let top10URI = `api/main/Technologies/10`;
-        let top10SalaryURI = `api/main/Technologies/salary/10`;
         if (selectedKeywords.length > 0) {
             top10URI = `api/main/Technologies?keywords=[${selectedKeywords.map(
-                (kw) => `"${encodeURIComponent(kw)}"`
-            )}]`;
-            top10SalaryURI = `api/main/TechnologiesSalaries?keywords=[${selectedKeywords.map(
                 (kw) => `"${encodeURIComponent(kw)}"`
             )}]`;
         }
@@ -52,6 +63,29 @@ const ChartsContainer = (props) => {
             .catch((err) => {
                 console.log(err);
             });
+    }, [selectedKeywords]);
+
+    //ComponentDidMount
+    useEffect(() => {
+        axios
+            .get(`/api/main/keywords`)
+            .then((res) => {
+                setKeywords(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
+
+    useEffect(() => {
+        let top10SalaryURI = `api/main/Technologies/salary/10`;
+
+        if (selectedKeywordsSalary.length > 0) {
+            top10SalaryURI = `api/main/TechnologiesSalaries?keywords=[${selectedKeywordsSalary.map(
+                (kw) => `"${encodeURIComponent(kw)}"`
+            )}]`;
+        }
+
         //best salary earning technologies
         axios
             .get(top10SalaryURI)
@@ -71,32 +105,50 @@ const ChartsContainer = (props) => {
             .catch((err) => {
                 console.log(err);
             });
-        axios
-            .get(`/api/main/keywords`)
-            .then((res) => {
-                setKeywords(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [selectedKeywords]);
+    }, [selectedKeywordsSalary]);
 
     return (
         <Container maxWidth='lg'>
-            <MultipleSelect selectList={keywords} />
+            <Typography
+                className={classes.title}
+                align='center'
+                variant='h3'
+                component='h3'
+            >
+                Most popular IT job positions in Lithuania
+            </Typography>
+
+            <MultipleSelect
+                selectList={keywords}
+                setSelectedKeywords={setSelectedKeywords}
+            />
             <ColumnChart
                 counts={techChartStates.series}
                 titles={techChartStates.titles}
                 key={techChartStates.series}
             />
 
-            <Box display='flex' justifyContent='center'>
+            <Box mt={5} mb={5} display='flex' justifyContent='center'>
                 <PieChart
                     counts={techChartStates.series}
                     titles={techChartStates.titles}
                     key={techChartStates.series}
                 />
             </Box>
+
+            <Typography
+                className={classes.title}
+                align='center'
+                variant='h3'
+                component='h3'
+            >
+                Most paid IT job positions in Lithuania
+            </Typography>
+
+            <MultipleSelect
+                selectList={keywords}
+                setSelectedKeywords={setSelectedKeywordsSalary}
+            />
             <SalaryChart
                 counts={techSalaryChartStates.average_salary}
                 titles={techSalaryChartStates.salaryTitles}

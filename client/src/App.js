@@ -7,16 +7,21 @@ import { ChartContext } from './components/ChartContext';
 
 function App() {
     const [selectedKeywords, setSelectedKeywords] = useState([]);
+    const [selectedKeywordsSalary, setSelectedKeywordsSalary] = useState([]);
     return (
         <div className='App'>
             <NavBar />
             <Introduction />
             <ChartContext.Provider
-                value={{ selectedKeywords, setSelectedKeywords }}
+                value={{
+                    selectedKeywords,
+                    setSelectedKeywords,
+                    selectedKeywordsSalary,
+                    setSelectedKeywordsSalary,
+                }}
             >
                 <ChartContainer />
             </ChartContext.Provider>
-
         </div>
     );
 }

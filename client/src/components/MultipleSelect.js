@@ -1,24 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Checkbox, TextField } from '@material-ui/core';
-import { ChartContext } from './ChartContext';
 
-const useStyles = makeStyles((theme) => ({
-    autocomplete: {
-        width: '500px',
-    },
-}));
-
-const MultipleSelect = ({ selectList }) => {
-    const { selectedKeywords, setSelectedKeywords } = useContext(ChartContext);
-
+const MultipleSelect = ({ selectList, setSelectedKeywords }) => {
     const handleChange = (event, value) => {
         setSelectedKeywords(value);
     };
 
-    const classes = useStyles();
     return (
         <Autocomplete
             multiple
