@@ -31,13 +31,13 @@ router.get('/Technologies/:count', (req, res) => {
 
 router.get('/Technologies', (req, res) => {
     let keywords = JSON.parse(req.query.keywords);
+    console.log('Technologies' + keywords);
     Main.find({
-        'title': { $in: keywords}
+        title: { $in: keywords },
     })
         .sort({ count: 'descending' })
-        .then(maps => res.json(maps));
+        .then((maps) => res.json(maps));
 });
-
 
 // @route   GET api/main/Technologies/salary/:amount
 // @desc    amount is the salary value for each technlogy
@@ -49,18 +49,18 @@ router.get('/Technologies/salary/:count', (req, res) => {
         .then((maps) => res.json(maps.slice(0, req.params.count)));
 });
 
-
-// @route   GET api/main//TechnologiesSalaries?keywords=[]
+// @route   GET api/main/TechnologiesSalaries?keywords=[]
 // @desc    array is the array of keywords we wanna see in the charts
 // @acess   Public
 
 router.get('/TechnologiesSalaries', (req, res) => {
     let keywords = JSON.parse(req.query.keywords);
+    console.log(req.query.keywords);
     Main.find({
-        'title': { $in: keywords }
+        title: { $in: keywords },
     })
         .sort({ average_salary: 'descending' })
-        .then(maps => res.json(maps));
+        .then((result) => res.json(result));
 });
 
 // @route   GET api/main/Technologies/website?array=[]
@@ -89,7 +89,7 @@ router.get('/Technologies/data/website', async (req, res) => {
 router.get('/keywords', async (req, res) => {
     try {
         let parsedKeywords = keywords.map((e) => {
-            return e[0];
+            return e[0].replace(/\\/g, '');
         });
         res.json(parsedKeywords);
     } catch (err) {

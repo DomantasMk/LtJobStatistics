@@ -13,7 +13,7 @@ const combineData = async (keys) => {
                 let fullData = [];
                 for (let i = 0; i < keys.length; i++) {
                     let dataForKeyword = {
-                        title: keys[i][0],
+                        title: keys[i][0].replace(/\\/g, ''),
                         count: 0,
                         average_salary: 0,
                     };

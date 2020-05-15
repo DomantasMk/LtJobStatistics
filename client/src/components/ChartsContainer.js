@@ -24,10 +24,14 @@ const ChartsContainer = (props) => {
 
     useEffect(() => {
         let top10URI = `api/main/Technologies/10`;
-        let top10SalaryURI =`api/main/Technologies/salary/10`;
-        if(selectedKeywords.length > 0){
-            top10URI = `api/main/Technologies?keywords=[${selectedKeywords.map(kw => `"${encodeURIComponent(kw)}"`)}]`;
-            top10SalaryURI =`api/main/TechnologiesSalaries?keywords=[${selectedKeywords.map(kw => `"${encodeURIComponent(kw)}"`)}]`;
+        let top10SalaryURI = `api/main/Technologies/salary/10`;
+        if (selectedKeywords.length > 0) {
+            top10URI = `api/main/Technologies?keywords=[${selectedKeywords.map(
+                (kw) => `"${encodeURIComponent(kw)}"`
+            )}]`;
+            top10SalaryURI = `api/main/TechnologiesSalaries?keywords=[${selectedKeywords.map(
+                (kw) => `"${encodeURIComponent(kw)}"`
+            )}]`;
         }
         //most common technologies
         axios
@@ -78,7 +82,6 @@ const ChartsContainer = (props) => {
     }, [selectedKeywords]);
 
     return (
-        
         <Container maxWidth='lg'>
             <MultipleSelect selectList={keywords} />
             <ColumnChart

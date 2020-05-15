@@ -42,7 +42,7 @@ const findKeywords = (jobsObject, _keywords) => {
                         jobsObject[i].text.toLowerCase()
                     )
                 ) {
-                    foundedKeywords.push(_keywords[j][0]);
+                    foundedKeywords.push(_keywords[j][0].replace(/\\/g, ''));
                     break;
                 }
             }
