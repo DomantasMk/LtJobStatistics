@@ -22,7 +22,7 @@ const MultipleSelect = ({ selectList, setSelectedKeywords }) => {
                     {option}
                 </React.Fragment>
             )}
-            style={{ width: '500px' }}
+            style={{ width: '100%' }}
             renderInput={(params) => (
                 <TextField
                     {...params}

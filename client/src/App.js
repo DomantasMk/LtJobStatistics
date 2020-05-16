@@ -4,6 +4,7 @@ import NavBar from './components/NavBar';
 import ChartContainer from './components/ChartsContainer';
 import Introduction from './components/Introduction';
 import { ChartContext } from './components/ChartContext';
+import Footer from './components/Footer';
 
 function App() {
     const [selectedKeywords, setSelectedKeywords] = useState([]);
@@ -22,6 +23,7 @@ function App() {
             >
                 <ChartContainer />
             </ChartContext.Provider>
+            <Footer />
         </div>
     );
 }

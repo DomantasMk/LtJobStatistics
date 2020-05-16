@@ -31,7 +31,6 @@ router.get('/Technologies/:count', (req, res) => {
 
 router.get('/Technologies', (req, res) => {
     let keywords = JSON.parse(req.query.keywords);
-    console.log('Technologies' + keywords);
     Main.find({
         title: { $in: keywords },
     })
@@ -55,7 +54,6 @@ router.get('/Technologies/salary/:count', (req, res) => {
 
 router.get('/TechnologiesSalaries', (req, res) => {
     let keywords = JSON.parse(req.query.keywords);
-    console.log(req.query.keywords);
     Main.find({
         title: { $in: keywords },
     })

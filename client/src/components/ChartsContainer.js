@@ -117,11 +117,12 @@ const ChartsContainer = (props) => {
             >
                 Most popular IT job positions in Lithuania
             </Typography>
-
-            <MultipleSelect
-                selectList={keywords}
-                setSelectedKeywords={setSelectedKeywords}
-            />
+            <Box mb={2}>
+                <MultipleSelect
+                    selectList={keywords}
+                    setSelectedKeywords={setSelectedKeywords}
+                />
+            </Box>
             <ColumnChart
                 counts={techChartStates.series}
                 titles={techChartStates.titles}
@@ -144,11 +145,12 @@ const ChartsContainer = (props) => {
             >
                 Most paid IT job positions in Lithuania
             </Typography>
-
-            <MultipleSelect
-                selectList={keywords}
-                setSelectedKeywords={setSelectedKeywordsSalary}
-            />
+            <Box mb={2}>
+                <MultipleSelect
+                    selectList={keywords}
+                    setSelectedKeywords={setSelectedKeywordsSalary}
+                />
+            </Box>
             <SalaryChart
                 counts={techSalaryChartStates.average_salary}
                 titles={techSalaryChartStates.salaryTitles}

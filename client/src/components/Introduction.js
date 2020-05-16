@@ -26,24 +26,24 @@ const Introduction = (props) => {
                 <Box mt={2}>
                     <Typography variant='body1'>
                         For this project we used:
-                        <ul>
-                            <li>
-                                Client side - <b>React.js</b>
-                            </li>
-                            <li>
-                                Server side - <b>Node.js</b>
-                            </li>
-                            <li>
-                                Scraping data - <b>Puppeter library</b>
-                            </li>
-                            <li>
-                                Database - <b>MongoDB</b>
-                            </li>
-                            <li>
-                                Framework - <b>Express.js</b>
-                            </li>
-                        </ul>
                     </Typography>
+                    <ul>
+                        <li>
+                            Client side - <b>React.js</b>
+                        </li>
+                        <li>
+                            Server side - <b>Node.js</b>
+                        </li>
+                        <li>
+                            Scraping data - <b>Puppeter library</b>
+                        </li>
+                        <li>
+                            Database - <b>MongoDB</b>
+                        </li>
+                        <li>
+                            Framework - <b>Express.js</b>
+                        </li>
+                    </ul>
                 </Box>
             </Box>
         </Container>
