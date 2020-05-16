@@ -75,7 +75,7 @@ const ChartsContainer = (props) => {
             .catch((err) => {
                 console.log(err);
             });
-    });
+    },[]);
 
     useEffect(() => {
         let top10SalaryURI = `api/main/Technologies/salary/10`;
