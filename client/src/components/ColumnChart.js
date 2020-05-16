@@ -45,7 +45,15 @@ const ColumnChart = ({ counts, titles }) => {
                         fontSize: '12px',
                     },
                 },
+                title:{
+                    text:"Dev. Positions/Technologies/Tools",
+                }
             },
+            yaxis: {
+                title: {
+                  text: 'Job postings count',
+                },
+              },
         },
     });
 
