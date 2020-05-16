@@ -23,6 +23,14 @@ export default function SalaryContainer({ counts, titles }) {
                   },
                   xaxis: {
                     categories: titles,
+                    title:{
+                      text:"Average Specified Salary (€)",
+                  }
+                  },
+                  yaxis:{
+                    title:{
+                      text:"Dev. Positions/Technologies/Tools",
+                  }
                   }
                 },
         });
