@@ -8,7 +8,7 @@ const ColumnChart = ({ counts, titles }) => {
     const [chartState, setChartState] = useState({
         series: [
             {
-                name: 'Viso',
+                name: 'Job ads',
                 data: counts, //Series of data for the chart
             },
         ],
