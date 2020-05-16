@@ -15,7 +15,7 @@ const Footer = (props) => {
         <Container maxWidth={'lg'}>
             <Box style={{ textAlign: 'center' }} mt={20} mb={5}>
                 <Typography variant={'h6'}>
-                    Tou can find code and developers here :)
+                    You can find code and developers here :)
                 </Typography>
                 <Box mt={2} mb={3}>
                     <Tooltip title='Project repository'>

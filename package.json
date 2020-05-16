@@ -9,7 +9,7 @@
         "client": "npm start --prefix client",
         "dev": "concurrently \"npm run server\" \"npm run client\"",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-        "start":"node index.js"
+        "start": "node index.js"
     },
     "repository": {
         "type": "git",
@@ -22,8 +22,6 @@
     },
     "homepage": "https://github.com/DomantasMk/LtJobStatistics#readme",
     "dependencies": {
-        "@material-ui/icons": "^4.9.1",
-        "@material-ui/lab": "^4.0.0-alpha.53",
         "axios": "^0.19.2",
         "config": "^3.3.1",
         "express": "^4.17.1",
