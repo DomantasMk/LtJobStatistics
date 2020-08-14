@@ -1,8 +1,10 @@
+# LtItJobStatistics
+This website was made to research the trends of technologies/tools mentioned in IT job adverts. You can see generated charts from data we gathered, the default charts are of top 10 technologies in the database, but there is a filter if you want to view different data, feel free to check out 😎.
+
+![](header.png)
+
 # Link to live version 
 https://ltitjobstatistics.herokuapp.com
-
-# About
-
 
 # For this project we used:
 
@@ -12,15 +14,9 @@ https://ltitjobstatistics.herokuapp.com
 * Database - MongoDB/Mongoose
 * Node.js Framework - Express.js
 
-# LtItJobStatistics
-This website was made to research the trends of technologies/tools mentioned in IT job adverts. You can see generated charts from data we gathered, the default charts are of top 10 technologies in the database, but there is a filter if you want to view different data, feel free to check out 😎.
-
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Downloads Stats][npm-downloads]][npm-url]
-
-
-![](header.png)
 
 ## Installation
 
@@ -28,13 +24,6 @@ This website was made to research the trends of technologies/tools mentioned in 
 npm install
 npm start
 ```
-
-
-## Usage example
-
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
-
-_For more examples and usage, please refer to the [Wiki][wiki]._
 
 ## Meta
 
@@ -46,7 +35,7 @@ Distributed under the XYZ license. See ``LICENSE`` for more information.
 
 ## Contributing
 
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
+1. Fork it
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
