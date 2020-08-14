@@ -2,7 +2,7 @@
 https://ltitjobstatistics.herokuapp.com
 
 # About
-This website was made to research the trends of technologies/tools mentioned in IT job adverts. You can see generated charts from data we gathered, the default charts are of top 10 technologies in the database, but there is a filter if you want to view different data, feel free to check out 😎.
+
 
 # For this project we used:
 
@@ -12,60 +12,29 @@ This website was made to research the trends of technologies/tools mentioned in 
 * Database - MongoDB/Mongoose
 * Node.js Framework - Express.js
 
-# Product Name
-> Short blurb about what your product does.
+# LtItJobStatistics
+This website was made to research the trends of technologies/tools mentioned in IT job adverts. You can see generated charts from data we gathered, the default charts are of top 10 technologies in the database, but there is a filter if you want to view different data, feel free to check out 😎.
 
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 
-One to two paragraph statement about your product and what it does.
 
 ![](header.png)
 
 ## Installation
 
-OS X & Linux:
-
 ```sh
-npm install my-crazy-module --save
+npm install
+npm start
 ```
 
-Windows:
-
-```sh
-edit autoexec.bat
-```
 
 ## Usage example
 
 A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
 
 _For more examples and usage, please refer to the [Wiki][wiki]._
-
-## Development setup
-
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
-
-```sh
-make install
-npm test
-```
-
-## Release History
-
-* 0.2.1
-    * CHANGE: Update docs (module code remains unchanged)
-* 0.2.0
-    * CHANGE: Remove `setDefaultXYZ()`
-    * ADD: Add `init()`
-* 0.1.1
-    * FIX: Crash when calling `baz()` (Thanks @GenerousContributorName!)
-* 0.1.0
-    * The first proper release
-    * CHANGE: Rename `foo()` to `bar()`
-* 0.0.1
-    * Work in progress
 
 ## Meta
 
