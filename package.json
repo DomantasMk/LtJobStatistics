@@ -1,35 +1,36 @@
 {
-    "name": "ltjobstatistics",
-    "version": "1.0.0",
-    "description": "Lithuanian jobs statistics",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "server": "nodemon server",
-        "client": "npm start --prefix client",
-        "dev": "concurrently \"npm run server\" \"npm run client\"",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-        "start": "node index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/DomantasMk/LtJobStatistics.git"
-    },
-    "author": "Tautvydas, Domantas",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/DomantasMk/LtJobStatistics/issues"
-    },
-    "homepage": "https://github.com/DomantasMk/LtJobStatistics#readme",
-    "dependencies": {
-        "axios": "^0.19.2",
-        "config": "^3.3.1",
-        "express": "^4.17.1",
-        "mongoose": "^5.9.13",
-        "puppeteer": "^3.0.4"
-    },
-    "devDependencies": {
-        "concurrently": "^5.2.0",
-        "nodemon": "^2.0.3"
-    }
+  "name": "ltjobstatistics",
+  "version": "1.0.0",
+  "description": "Lithuanian jobs statistics",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "start": "node index.js",
+    "client-install": "npm run install --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DomantasMk/LtJobStatistics.git"
+  },
+  "author": "Tautvydas, Domantas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DomantasMk/LtJobStatistics/issues"
+  },
+  "homepage": "https://github.com/DomantasMk/LtJobStatistics#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.13",
+    "puppeteer": "^3.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.3"
+  }
 }
