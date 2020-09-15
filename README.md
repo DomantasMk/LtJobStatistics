@@ -20,7 +20,7 @@ https://ltitjobstatistics.herokuapp.com
 
 ```sh
 npm install
-npm client && npm install && cd ..
+cd client && npm install && cd ..
 npm run dev
 ```
 
