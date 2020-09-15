@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactApexChart from "react-apexcharts";
 import PropTypes from "prop-types";
 
 const PieChart = ({ counts, titles }) => {
-  const [chartState, setChartState] = useState({
+  const chartObject = {
     series: counts,
     options: {
       chart: {
@@ -25,13 +25,13 @@ const PieChart = ({ counts, titles }) => {
         },
       ],
     },
-  });
+  };
 
   return (
     <div id="pieChart">
       <ReactApexChart
-        options={chartState.options}
-        series={chartState.series}
+        options={chartObject.options}
+        series={chartObject.series}
         type="pie"
         width={380}
       />

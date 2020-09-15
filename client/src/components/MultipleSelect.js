@@ -4,7 +4,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Checkbox, TextField } from "@material-ui/core";
 
 const MultipleSelect = ({ selectList, setSelectedKeywords }) => {
-  const handleChange = (event, value) => {
+  const handleChange = (value) => {
     setSelectedKeywords(value);
   };
 
@@ -13,7 +13,7 @@ const MultipleSelect = ({ selectList, setSelectedKeywords }) => {
       multiple
       options={selectList}
       disableCloseOnSelect
-      onChange={(e, value) => handleChange(e, value)}
+      onChange={(e, value) => handleChange(value)}
       getOptionLabel={(option) => option}
       renderOption={(option, { selected }) => (
         <React.Fragment>
