@@ -1,7 +1,7 @@
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { Box } from "@material-ui/core";
+import { Box, ListItemText } from "@material-ui/core";
 
 const Introduction = (props) => {
   return (
@@ -23,23 +23,25 @@ const Introduction = (props) => {
         </Typography>
         <Box mt={2}>
           <Typography variant="body1">For this project we used:</Typography>
-          <ul>
-            <li>
-              Client side - <b>React.js</b>
-            </li>
-            <li>
-              Server side - <b>Node.js</b>
-            </li>
-            <li>
-              Scraping data - <b>Puppeter library</b>
-            </li>
-            <li>
-              Database - <b>MongoDB</b>
-            </li>
-            <li>
-              Framework - <b>Express.js</b>
-            </li>
-          </ul>
+          <ListItemText>
+            <ul>
+              <li>
+                Client side - <b>React.js</b>
+              </li>
+              <li>
+                Server side - <b>Node.js</b>
+              </li>
+              <li>
+                Scraping data - <b>Puppeter library</b>
+              </li>
+              <li>
+                Database - <b>MongoDB</b>
+              </li>
+              <li>
+                Framework - <b>Express.js</b>
+              </li>
+            </ul>
+          </ListItemText>
         </Box>
       </Box>
     </Container>

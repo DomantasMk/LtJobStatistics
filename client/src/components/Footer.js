@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, IconButton, Grid, Tooltip } from "@material-ui/core";
+import { Box, Typography, IconButton, Tooltip } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 
