@@ -41,10 +41,11 @@ const Footer = (props) => {
           </IconButton>
         </Tooltip>
       </Box>
-      <Grid></Grid>
-      <Typography variant={"body1"}>
-        © LTJobStatistics {new Date().getFullYear()}
-      </Typography>
+      <Box pb={2}>
+        <Typography variant={"body1"}>
+          © LTJobStatistics {new Date().getFullYear()}
+        </Typography>
+      </Box>
     </Box>
   );
 };
