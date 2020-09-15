@@ -19,8 +19,8 @@ https://ltitjobstatistics.herokuapp.com
 ## Installation
 
 ```sh
-npm install && cd client && npm install && cd ..
-npm run dev
+1) npm install && cd client && npm install && cd ..
+2) npm run dev
 ```
 
 ## Meta
