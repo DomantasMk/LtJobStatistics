@@ -1,146 +1,141 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
 
 async function scrapeInside(page) {
-    const scrappedInfo = await page.evaluate(() => {
-        let job_title = null;
-        let text = null;
-        let company = null;
-        let job_posted_date = null;
-        let salary = '0';
-        let website = 'cv.lt';
+  const scrappedInfo = await page.evaluate(() => {
+    let job_title = null;
+    let text = null;
+    let company = null;
+    let job_posted_date = null;
+    let salary = "0";
+    let website = "cv.lt";
 
-        try {
-            job_title = document.querySelector('#jobCont01 > h1').innerHTML;
-        } catch (error) {
-            console.log(error.message);
-        }
+    try {
+      job_title = document.querySelector("#jobCont01 > h1").innerHTML;
+    } catch (error) {
+      console.log(error.message);
+    }
 
-        try {
-            text = document.querySelector('#jobTxtRight').innerText;
-        } catch (error) {
-            console.log(error.message);
-        }
+    try {
+      text = document.querySelector("#jobTxtRight").innerText;
+    } catch (error) {
+      console.log(error.message);
+    }
 
-        try {
-            company = document.querySelector(
-                "meta[itemprop='hiringOrganization']"
-            ).content;
-        } catch (error) {
-            console.log(error.message);
-        }
+    try {
+      company = document.querySelector("meta[itemprop='hiringOrganization']")
+        .content;
+    } catch (error) {
+      console.log(error.message);
+    }
 
-        try {
-            job_posted_date = document.querySelector(
-                "meta[itemprop='datePosted']"
-            ).content;
-        } catch (error) {
-            console.log(error.message);
-        }
+    try {
+      job_posted_date = document.querySelector("meta[itemprop='datePosted']")
+        .content;
+    } catch (error) {
+      console.log(error.message);
+    }
 
-        try {
-            salary = document.querySelector("meta[itemprop='baseSalary']")
-                .content;
-        } catch (error) {
-            console.log(error.message);
-        }
+    try {
+      salary = document.querySelector("meta[itemprop='baseSalary']").content;
+    } catch (error) {
+      console.log(error.message);
+    }
 
-        return {
-            job_title,
-            text,
-            company,
-            job_posted_date,
-            salary,
-            website,
-        };
-    });
+    return {
+      job_title,
+      text,
+      company,
+      job_posted_date,
+      salary,
+      website,
+    };
+  });
 
-    console.log('Inner scrapped...');
-    return scrappedInfo;
+  console.log("Inner scrapped...");
+  return scrappedInfo;
 }
 
 async function scrapeOutside(page) {
-    try {
-        const jobUrls = await page.evaluate(() => {
-            let urls = [];
+  try {
+    const jobUrls = await page.evaluate(() => {
+      let urls = [];
 
-            try {
-                let itemsWithUrls = document.querySelectorAll(
-                    'a[itemprop="title"]'
-                );
+      try {
+        let itemsWithUrls = document.querySelectorAll('a[itemprop="title"]');
 
-                for (let i = 0; i < itemsWithUrls.length; i++) {
-                    urls.push(itemsWithUrls[i].href);
-                }
-            } catch (error) {
-                console.log(error.message);
-                console.log('Scrape outside failed to find elements');
-            }
+        for (let i = 0; i < itemsWithUrls.length; i++) {
+          urls.push(itemsWithUrls[i].href);
+        }
+      } catch (error) {
+        console.log(error.message);
+        console.log("Scrape outside failed to find elements");
+      }
 
-            return urls;
-        });
+      return urls;
+    });
 
-        return jobUrls;
-    } catch (error) {
-        console.log(error);
-    }
+    return jobUrls;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function getPagesUrls(page) {
-    try {
-        const urls = await page.evaluate(() => {
-            let urls = [];
+  try {
+    const urls = await page.evaluate(() => {
+      let urls = [];
 
-            try {
-                let items = document
-                    .querySelector('.paging-list')
-                    .querySelector('.has-sub')
-                    .querySelector('ul')
-                    .getElementsByTagName('a');
+      try {
+        let items = document
+          .querySelector(".paging-list")
+          .querySelector(".has-sub")
+          .querySelector("ul")
+          .getElementsByTagName("a");
 
-                for (let i = 0; i < items.length; i++) {
-                    urls.push(items[i].href);
-                }
-            } catch (error) {
-                console.log(error.message);
-                console.log('failed to find pages URLS ');
-            }
-            return urls;
-        });
+        for (let i = 0; i < items.length; i++) {
+          urls.push(items[i].href);
+        }
+      } catch (error) {
+        console.log(error.message);
+        console.log("failed to find pages URLS ");
+      }
+      return urls;
+    });
 
-        return urls;
-    } catch (error) {
-        console.log(error);
-    }
+    return urls;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports.startScrape = async function (url) {
-    console.log('Started scraping');
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle0' });
-    let fullUrls = [];
-    let fullScraped = [];
+  console.log("Started scraping");
+  const browser = await puppeteer.launch({ headless: false });
+  const page = await browser.newPage();
+  await page.goto(url, { waitUntil: "networkidle0" });
+  let fullUrls = [];
+  let fullScraped = [];
 
-    //Get pages links
-    console.log('Getting pages URLS');
-    const pagesUrls = await getPagesUrls(page);
+  //Get pages links
+  console.log("Getting pages URLS");
+  const pagesUrls = await getPagesUrls(page);
 
-    //Loop thru each page and get cv urls
-    console.log('Getting all job urls');
-    for (let i = 0; i < pagesUrls.length; i++) {
-        await page.goto(pagesUrls[i], { waitUntil: 'networkidle0' });
-        const urls = await scrapeOutside(page);
-        fullUrls = fullUrls.concat(urls);
-    }
+  //Loop thru each page and get cv urls
+  console.log("Getting all job urls");
+  for (let i = 0; i < pagesUrls.length; i++) {
+    await page.goto(pagesUrls[i], { waitUntil: "networkidle0" });
+    const urls = await scrapeOutside(page);
+    fullUrls = fullUrls.concat(urls);
+  }
 
-    console.log('Scrapping job insides');
-    for (let i = 0; i < fullUrls.length; i++) {
-        await page.goto(fullUrls[i], { waitUntil: 'networkidle0' });
-        let info = await scrapeInside(page);
-        fullScraped.push(info);
-    }
-    console.log('Finished scraping');
+  console.log("Scrapping job insides");
+  for (let i = 0; i < fullUrls.length; i++) {
+    await page.goto(fullUrls[i], { waitUntil: "networkidle0" });
+    let info = await scrapeInside(page);
+    fullScraped.push(info);
+  }
+  console.log("Finished scraping");
 
-    await browser.close();
-    return fullScraped;
+  await browser.close();
+  return fullScraped;
 };
